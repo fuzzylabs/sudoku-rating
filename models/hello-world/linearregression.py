@@ -1,9 +1,12 @@
+import argparse
+import os
+
 import pandas as pd
 from typing import Tuple
 import numpy as np
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
 from sklearn.base import BaseEstimator
 from sklearn.metrics import mean_absolute_error
 
@@ -32,10 +35,10 @@ def prepare(dataset: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     return prepared_puzzles, dataset.difficulty.values
 
 
-def train(X: np.ndarray, y: np.ndarray) -> BaseEstimator:
+def train(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -> BaseEstimator:
     print("Split data")
     X_train, X_test, y_train, y_test = train_test_split(X, y)
-    model = LinearRegression()
+    model = Ridge(alpha=alpha)
 
     print("Fit model")
     model.fit(X_train, y_train)
@@ -49,11 +52,17 @@ def train(X: np.ndarray, y: np.ndarray) -> BaseEstimator:
     return model
 
 
-def main(dataset_path: str):
-    dataset = load_data(dataset_path)
+def main(dataset_path: str, alpha: float):
+    dataset = load_data(dataset_path).iloc[:10000]
     X, y = prepare(dataset)
-    model = train(X, y)
+    model = train(X, y, alpha)
 
 
 if __name__ == "__main__":
-    main("../../data/sudoku-3m.csv")
+    parser = argparse.ArgumentParser(description='Train linear model')
+
+    parser.add_argument("--alpha", type=float)
+
+    args = parser.parse_args()
+
+    main("data/sudoku-3m.csv", args.alpha)
