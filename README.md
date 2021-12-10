@@ -5,6 +5,8 @@ We want to model sudoku solver rating and difficulty. We start with classic sudo
 
 ## Requirements
 * Python 3.7+
+* [Pyenv](https://github.com/pyenv)
+  * Pyenv can;t be installed using pip see the [installation docs](https://github.com/pyenv/pyenv#installation)
 * [Pipenv](https://pypi.org/project/pipenv/)
 * [dvc](https://dvc.org/doc/install/)
 
