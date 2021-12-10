@@ -35,7 +35,7 @@ def prepare(dataset: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     return prepared_puzzles, dataset.difficulty.values
 
 
-def train(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -> BaseEstimator:
+def train(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -> Tuple[BaseEstimator, float]:
     print("Split data")
     X_train, X_test, y_train, y_test = train_test_split(X, y)
     model = Ridge(alpha=alpha)
@@ -49,13 +49,15 @@ def train(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -> BaseEstimator:
     accuracy = mean_absolute_error(y_test, y_pred)
     print("MAE:", accuracy)
 
-    return model
+    return model, accuracy
 
 
-def main(dataset_path: str, alpha: float):
+def linear_regression(dataset_path: str, alpha: float):
     dataset = load_data(dataset_path).iloc[:10000]
     X, y = prepare(dataset)
-    model = train(X, y, alpha)
+    model, accuracy = train(X, y, alpha)
+
+    return model, accuracy
 
 
 if __name__ == "__main__":
@@ -65,4 +67,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main("data/sudoku-3m.csv", args.alpha)
+    linear_regression("../../data/sudoku-3m.csv", args.alpha)

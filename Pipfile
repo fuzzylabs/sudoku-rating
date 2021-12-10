@@ -8,6 +8,7 @@ dvc = "*"
 sklearn = "*"
 pandas = "*"
 tqdm = "*"
+mlflow = "*"
 
 [dev-packages]
 

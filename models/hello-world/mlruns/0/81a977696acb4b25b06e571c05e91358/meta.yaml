@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/81a977696acb4b25b06e571c05e91358/artifacts
+end_time: 1639156938562
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 81a977696acb4b25b06e571c05e91358
+run_uuid: 81a977696acb4b25b06e571c05e91358
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1639156929324
+status: 3
+tags: []
+user_id: ollie

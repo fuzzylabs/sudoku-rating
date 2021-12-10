@@ -8,8 +8,7 @@ We want to model sudoku solver rating and difficulty. We start with classic sudo
 * [Pyenv](https://github.com/pyenv)
   * Pyenv can;t be installed using pip see the [installation docs](https://github.com/pyenv/pyenv#installation)
 * [Pipenv](https://pypi.org/project/pipenv/)
-* [dvc](https://dvc.org/doc/install/)
-* [Guild.AI](https://my.guild.ai/t/get-started-with-guild-ai/35)
+* [mlflow](https://mlflow.org/docs/latest/quickstart.html)
 
 ## Getting started
 Set up python environment, and install dependencies
@@ -30,14 +29,12 @@ dvc remote modify origin --local password <Token>
 ```
 
 ## Training Linear model
-There's a linear model training code in `models/hello-world`. The code can be run with Guild.AI to track the experiment:
+There's a linear model training code in `models/hello-world`. The code can be run with mlflow to track the experiment:
 ```
-guild run train
-```
-
-If you want to override hyperparameters (i.e. alpha), you can specify them as command line arguments:
-```
-guild run train alpha=0.1
+python mlflow_loggin.py
 ```
 
-For more details on hyperparameter optimision with Guild.AI, see [the documentation](https://my.guild.ai/t/get-started-optimize-a-model/41)
+You can compare experiments using mlflow's ui:
+```
+mlflow ui
+```
