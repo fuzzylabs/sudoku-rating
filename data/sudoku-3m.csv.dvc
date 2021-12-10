@@ -1,0 +1,4 @@
+outs:
+- md5: cc2ee5eee6aa86fd7206883479f3c1c1
+  size: 535888932
+  path: sudoku-3m.csv
