@@ -10,6 +10,7 @@ from sklearn.linear_model import Ridge
 from sklearn.base import BaseEstimator
 from sklearn.metrics import mean_absolute_error
 from joblib import dump
+from puzzle_utils import prepare_puzzle
 
 tqdm.pandas()  # make pandas aware of tqdm
 
@@ -17,17 +18,6 @@ tqdm.pandas()  # make pandas aware of tqdm
 def load_data(path: str) -> pd.DataFrame:
     print("Load dataset")
     return pd.read_csv(path)
-
-
-def get_category(char: str) -> int:
-    if char == ".":
-        return 0
-    else:
-        return int(char)
-
-
-def prepare_puzzle(puzzle: str) -> np.ndarray:
-    return np.array([get_category(char) for char in puzzle])
 
 
 def prepare(dataset: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
