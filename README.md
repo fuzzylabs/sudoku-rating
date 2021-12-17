@@ -41,3 +41,32 @@ guild run train alpha=0.1
 ```
 
 For more details on hyperparameter optimision with Guild.AI, see [the documentation](https://my.guild.ai/t/get-started-optimize-a-model/41)
+
+## Experiment tracking
+You can view experiments by running (it will open the browser window):
+```
+guild view
+```
+
+You can pull runs performed on other machines from S3:
+```
+guild pull REMOTE_NAME
+```
+
+You can push runs performed on your machine to the remote, so they are available to your collaborators:
+```
+guild push REMOTE_NAME
+```
+
+## GuildAI remote configuration
+To push to and pull from the remote storage (AWS S3) you need to configure guild with the S3 remote. The example configuration is as follows:
+```
+remotes:
+  sudoku-s3:
+    type: s3
+    bucket: sudoku-rating-guildai
+    root: runs
+    region: eu-west-2
+```
+
+Adjust the configuration to reflect your environment. For more details see [GuildAI docs](https://my.guild.ai/t/remotes/171)
