@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Ridge
 from sklearn.base import BaseEstimator
 from sklearn.metrics import mean_absolute_error
+from joblib import dump
 
 tqdm.pandas()  # make pandas aware of tqdm
 
@@ -52,10 +53,16 @@ def train(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -> BaseEstimator:
     return model
 
 
+def persist_model(model: BaseEstimator, path: str):
+    print("Persisting the model")
+    dump(model, path)
+
+
 def main(dataset_path: str, alpha: float):
     dataset = load_data(dataset_path).iloc[:10000]
     X, y = prepare(dataset)
     model = train(X, y, alpha)
+    persist_model(model, "artifact/linearregression.joblib")
 
 
 if __name__ == "__main__":
