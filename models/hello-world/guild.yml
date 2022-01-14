@@ -4,6 +4,11 @@ train:
   requires:
     - file: ../../data/sudoku-3m.csv
       target-path: data
+      target-type: link
+    - file: linearregression.joblib
+      target-path: artifact
+      target-type: link
+
   flags:
     alpha:
       arg-name: alpha

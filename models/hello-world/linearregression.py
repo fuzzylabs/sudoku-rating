@@ -9,6 +9,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Ridge
 from sklearn.base import BaseEstimator
 from sklearn.metrics import mean_absolute_error
+from joblib import dump
+from puzzle_utils import prepare_puzzle
 
 tqdm.pandas()  # make pandas aware of tqdm
 
@@ -16,17 +18,6 @@ tqdm.pandas()  # make pandas aware of tqdm
 def load_data(path: str) -> pd.DataFrame:
     print("Load dataset")
     return pd.read_csv(path)
-
-
-def get_category(char: str) -> int:
-    if char == ".":
-        return 0
-    else:
-        return int(char)
-
-
-def prepare_puzzle(puzzle: str) -> np.ndarray:
-    return np.array([get_category(char) for char in puzzle])
 
 
 def prepare(dataset: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
@@ -52,10 +43,16 @@ def train(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -> BaseEstimator:
     return model
 
 
+def persist_model(model: BaseEstimator, path: str):
+    print("Persisting the model")
+    dump(model, path)
+
+
 def main(dataset_path: str, alpha: float):
     dataset = load_data(dataset_path).iloc[:10000]
     X, y = prepare(dataset)
     model = train(X, y, alpha)
+    persist_model(model, "artifact/linearregression.joblib")
 
 
 if __name__ == "__main__":

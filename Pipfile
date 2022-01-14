@@ -4,10 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-dvc = "*"
-sklearn = "*"
-pandas = "*"
+dvc = "2.9.2"
+scikit-learn = "1.0.1"
+pandas = "==1.3.5"
 tqdm = "*"
+joblib = "1.1.0"
+bentoml = "*"
+streamlit = "*"
 
 [dev-packages]
 

@@ -70,3 +70,21 @@ remotes:
 ```
 
 Adjust the configuration to reflect your environment. For more details see [GuildAI docs](https://my.guild.ai/t/remotes/171)
+
+## Serving
+The model is served with BentoML docker container.
+
+To pack the model artifact for bento:
+```
+python bento-packer.py
+```
+
+To serve the model with BentoML:
+```
+bentoml serve SudokuRating:latest
+```
+
+To run the Web UI (built with `streamlit`):
+```
+streamlit run ui.py
+```
