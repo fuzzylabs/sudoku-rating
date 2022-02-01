@@ -1,16 +1,13 @@
 import argparse
-import os
 
 import pandas as pd
 from typing import Tuple
 import numpy as np
 from tqdm import tqdm
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Ridge
 from sklearn.base import BaseEstimator
 from sklearn.metrics import mean_absolute_error
 from joblib import dump
-from puzzle_utils import prepare_puzzle
 
 tqdm.pandas()  # make pandas aware of tqdm
 
@@ -22,17 +19,14 @@ def load_data(path: str) -> pd.DataFrame:
 
 def prepare(dataset: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     print("Prepare dataset")
-    prepared_puzzles = np.vstack(dataset.puzzle.progress_apply(prepare_puzzle).values)
-    return prepared_puzzles, dataset.difficulty.values
+    feature_cols = [f"digit_{x}"for x in range(81)]
+    return dataset.loc[:, feature_cols].values, dataset.difficulty.values
 
 
-def train(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -> BaseEstimator:
-    print("Split data")
-    X_train, X_test, y_train, y_test = train_test_split(X, y)
-    model = Ridge(alpha=alpha)
-
+def train(X: np.ndarray, y: np.ndarray, X_test: np.ndarray, y_test: np.ndarray, alpha: float = 1.0) -> BaseEstimator:
     print("Fit model")
-    model.fit(X_train, y_train)
+    model = Ridge(alpha=alpha)
+    model.fit(X, y)
 
     print("Evaluate model")
     y_pred = model.predict(X_test)
@@ -48,10 +42,12 @@ def persist_model(model: BaseEstimator, path: str):
     dump(model, path)
 
 
-def main(dataset_path: str, alpha: float):
-    dataset = load_data(dataset_path).iloc[:10000]
+def main(dataset_path: str, test_dataset_path: str, alpha: float):
+    dataset = load_data(dataset_path)
+    test_dataset = load_data(dataset_path)
     X, y = prepare(dataset)
-    model = train(X, y, alpha)
+    X_test, y_test = prepare(test_dataset)
+    model = train(X, y, X_test, y_test, alpha)
     persist_model(model, "artifact/linearregression.joblib")
 
 
@@ -62,4 +58,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main("data/sudoku-3m.csv", args.alpha)
+    main("data/sudoku-3m-train.csv", "data/sudoku-3m-test.csv", args.alpha)
