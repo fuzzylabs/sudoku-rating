@@ -13,6 +13,7 @@ if __name__ == '__main__':
         # to test request to service sending new data
         data = new_data.iloc[idx].to_dict()
         # data["clues"] = 80
+        print(idx)
         requests.post('http://localhost:5000/iterate',
                       data=json.dumps([data], cls=NumpyEncoder),
                       headers={"content-type": "application/json"})
