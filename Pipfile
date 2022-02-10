@@ -9,10 +9,14 @@ scikit-learn = "1.0.1"
 pandas = "==1.3.5"
 tqdm = "*"
 joblib = "1.1.0"
-bentoml = "*"
 streamlit = "*"
+bentoml = "*"
+svc = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

@@ -81,7 +81,17 @@ python bento-packer.py
 
 To serve the model with BentoML:
 ```
-bentoml serve SudokuRating:latest
+bentoml serve ./serving.py:svc --reload
+```
+
+```shell
+curl --request POST \
+  --url "localhost:5000/predict" \
+  --header 'content-type: application/json' \
+  --data '[
+  "1..5.37..6.3..8.9......98...1.......8761..........6...........7.8.9.76.47...6.312",
+  "...81.....2........1.9..7...7..25.934.2............5...975.....563.....4......68."
+]'
 ```
 
 To run the Web UI (built with `streamlit`):
