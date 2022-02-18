@@ -2,7 +2,10 @@ train:
   description: Train linear regression model
   main: linearregression
   requires:
-    - file: ../../data/sudoku-3m.csv
+    - file: ../../data/sudoku-3m-train.csv
+      target-path: data
+      target-type: link
+    - file: ../../data/sudoku-3m-test.csv
       target-path: data
       target-type: link
     - file: linearregression.joblib

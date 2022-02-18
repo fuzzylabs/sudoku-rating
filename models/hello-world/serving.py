@@ -1,9 +1,23 @@
+import json
+
 import bentoml
 import numpy as np
+import requests
 from bentoml import BentoService, api
 from bentoml.adapters import JsonInput, JsonOutput
 from bentoml.frameworks.sklearn import SklearnModelArtifact
-from puzzle_utils import prepare_puzzle
+from evidently.utils import NumpyEncoder
+
+from puzzle_utils import prepare_puzzle, prepare_puzzle_for_monitoring
+
+
+def monitoring(cases, predictions):
+    for (case, prediction) in zip(cases, predictions):
+        point = prepare_puzzle_for_monitoring(case, prediction)
+        print("Monitoring", point)
+        requests.post('http://localhost:5000/iterate',
+                      data=json.dumps([point], cls=NumpyEncoder),
+                      headers={"content-type": "application/json"})
 
 
 @bentoml.env(infer_pip_packages=True)
@@ -28,6 +42,11 @@ class SudokuRating(BentoService):
         :param cases: World
         :return: Hi
         """
+        print("Got cases", cases)
         prepared_cases = np.vstack([prepare_puzzle(case) for case in cases])
-        print(prepared_cases)
-        return self.artifacts.linearregression.predict(prepared_cases)
+        predictions = self.artifacts.linearregression.predict(prepared_cases)
+        print("Predictions", predictions)
+        # TODO
+        monitoring(prepared_cases, predictions)
+
+        return predictions

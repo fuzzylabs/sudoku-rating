@@ -1,0 +1,18 @@
+data_format:
+  separator: ","
+  header: true
+column_mapping:
+  target: "difficulty"
+  prediction: "difficulty"
+  numerical_features: ['clues']
+  categorical_features: []
+pretty_print: true
+service:
+  reference_path: "./reference.csv"
+  reference_sample_size: 1000
+  min_reference_size: 30
+  use_reference: true
+  moving_reference: false
+  window_size: 30
+  calculation_period_sec: 10
+  monitors: [ "data_drift", "regression_performance" ]

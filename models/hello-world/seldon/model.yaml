@@ -1,0 +1,18 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: sudoku-model
+  namespace: seldon
+spec:
+  name: sudoku
+  predictors:
+  - graph:
+      implementation: SKLEARN_SERVER
+      modelUri: gs://test-sudoku-models/test/
+      name: classifier
+      parameters:
+        - name: method
+          type: STRING
+          value: predict
+    name: default
+    replicas: 1
