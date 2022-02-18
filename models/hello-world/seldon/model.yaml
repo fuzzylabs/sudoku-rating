@@ -8,7 +8,7 @@ spec:
   predictors:
   - graph:
       implementation: SKLEARN_SERVER
-      modelUri: gs://test-sudoku-models/test/
+      modelUri: gs://test-sudoku-models/test/ # TODO Move to fuzzylabs google cloud
       name: classifier
       parameters:
         - name: method
