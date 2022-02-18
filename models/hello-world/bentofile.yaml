@@ -1,0 +1,7 @@
+service: "serving.py:svc"
+include:
+ - "*.py"
+ - "*.joblib"
+python:
+  packages:
+   - scikit-learn

@@ -80,10 +80,21 @@ python bento-packer.py
 ```
 
 To serve the model with BentoML:
-```
+```shell
 bentoml serve ./serving.py:svc --reload
 ```
 
+To turn the bento into a docker image:
+```shell
+bentoml containerize linear_regression:latest
+```
+
+To run that docker image:
+```shell
+docker run -p 127.0.0.1:5000:5000 --rm linear_regression:<Image ID>
+```
+
+This is an example cURL command that will query the model for the given sudoku values
 ```shell
 curl --request POST \
   --url "localhost:5000/predict" \
